@@ -1,6 +1,6 @@
-# Skystone-2019
+# UltimateGoal-2020
 
-FTC Team 16626’s code for the Skystone Challenge (2019-2020)
+FTC Team 16626’s code for the Ultimate Goal Challenge (2020-2021)
 
 ## Getting started
 
@@ -9,10 +9,10 @@ FTC Team 16626’s code for the Skystone Challenge (2019-2020)
 There are multiple ways to download this code base.
 
 - **Option 1**: Use the [following link](https://github.com/ftc16626/Skystone-2019/archive/dev.zip) and unzip the downloaded file.
-- **Option 2**: Use the Git client of your choice (GitHub client, GitKraken, etc) to clone the following link: [https://github.com/ftc16626/Skystone-2019.git](https://github.com/ftc16626/Skystone-2019.git)
+- **Option 2**: Use the Git client of your choice (GitHub client, GitKraken, etc) to clone the following link: [https://github.com/ftc16626/UltimateGoal-2020.git](https://github.com/ftc16626/UltimateGoal-2020.git)
 - **Option 3**: Run the following command to clone this repo via the command line.
 
-  `git clone https://github.com/ftc16626/Skystone-2019.git`
+  `https://github.com/ftc16626/UltimateGoal-2020.git`
 
 ### Project Structure
 
