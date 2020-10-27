@@ -5,27 +5,24 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.Hardware;
+
+import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 
-@TeleOp(name="Template: Linear OpMode", group="Linear Opmode")
+@TeleOp(name="Teleop", group="Linear Opmode")
 public class MainTeleop extends LinearOpMode {
 
+    Robot robot = new Robot();
 
     @Override
     public void runOpMode() throws InterruptedException {
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
 
-        frontLeftMotor.setDirection(REVERSE);
-        backLeftMotor.setDirection(REVERSE);
-
+        robot.init(hardwareMap);
 
         waitForStart();
-
 
         while (!isStopRequested()) {
 
@@ -63,10 +60,10 @@ public class MainTeleop extends LinearOpMode {
 
 
             }
-            frontLeftMotor.setPower(frontLeftPower);
-            backLeftMotor.setPower(backLeftPower);
-            frontRightMotor.setPower(frontRightPower);
-            backRightMotor.setPower(backRightPower);
+            robot.frontLeft.setPower(frontLeftPower);
+            robot.backLeft.setPower(backLeftPower);
+            robot.frontRight.setPower(frontRightPower);
+            robot.backRight.setPower(backRightPower);
 
 
         }
