@@ -27,6 +27,8 @@ public class MainTeleop extends LinearOpMode {
         while (!isStopRequested()) {
 
 
+            robot.setDrivePower(-gamepad1.left_stick_y, gamepad1.left_stick_x * 1.5, gamepad1.right_stick_x);
+
 
             double y = -gamepad1.left_stick_y; // Remember, this is reversed!
             double x = gamepad1.left_stick_x * 1.5; // Counteract imperfect strafing
@@ -64,7 +66,6 @@ public class MainTeleop extends LinearOpMode {
             robot.backLeft.setPower(backLeftPower);
             robot.frontRight.setPower(frontRightPower);
             robot.backRight.setPower(backRightPower);
-
 
         }
     }
