@@ -34,6 +34,7 @@ public class Robot {
         backRight.setPower(0);
     }
 
+
     public void setDrivePower(double y, double x, double rx) {
 
         double frontLeftPower = y + x + rx;
