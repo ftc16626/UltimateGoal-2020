@@ -1,11 +1,20 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Robot {
+
+    public TouchSensor intakeLimit = null;
+
+    public CRServo intakeServo = null;
+    public DcMotor intakeMotor = null;
+    public DcMotor shooterMotor = null;
 
     public DcMotor frontLeft = null;
     public DcMotor frontRight = null;
@@ -19,18 +28,35 @@ public class Robot {
 
         hardwareMap = hwMap;
 
+        intakeLimit = hardwareMap.get(TouchSensor.class, "intakeLimit");
+        intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
+        shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
+        intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
         backLeft = hardwareMap.get(DcMotor.class, "backLeft");
         backRight = hardwareMap.get(DcMotor.class, "backRight");
 
+
         frontLeft.setDirection(REVERSE);
         backLeft.setDirection(REVERSE);
+
+
+
 
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+    }
+
+
+    public void runUsingEncoders() {
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 
