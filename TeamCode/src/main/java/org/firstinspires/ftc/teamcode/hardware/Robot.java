@@ -10,18 +10,18 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Robot {
 
-    public TouchSensor intakeLimit = null;
+    public TouchSensor intakeLimit;
 
-    public CRServo intakeServo = null;
-    public DcMotor intakeMotor = null;
-    public DcMotor shooterMotor = null;
+    public CRServo intakeServo;
+    public DcMotor intakeMotor;
+    public DcMotor shooterMotor;
 
-    public DcMotor frontLeft = null;
-    public DcMotor frontRight = null;
-    public DcMotor backLeft = null;
-    public DcMotor backRight = null;
+    public DcMotor frontLeft;
+    public DcMotor frontRight;
+    public DcMotor backLeft;
+    public DcMotor backRight;
 
-    HardwareMap hardwareMap = null;
+    HardwareMap hardwareMap;
 
 
     public void init(HardwareMap hwMap) {
@@ -43,8 +43,6 @@ public class Robot {
         backLeft.setDirection(REVERSE);
 
 
-
-
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
@@ -52,7 +50,7 @@ public class Robot {
     }
 
 
-    public void runUsingEncoders() {
+    public void setDriveUsingEncoders() {
         frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
