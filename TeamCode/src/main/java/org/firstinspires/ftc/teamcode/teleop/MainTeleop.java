@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
@@ -17,8 +19,7 @@ public class MainTeleop extends LinearOpMode {
 
     Robot robot = new Robot();
 
-
-    public void intake() {
+    public void intakeControl() {
 
         if (gamepad2.a && !robot.intakeLimit.isPressed()) {
 
@@ -60,24 +61,57 @@ public class MainTeleop extends LinearOpMode {
         } else if (gamepad2.x) {
             robot.shooterMotor.setPower(.6);
         } else {
-
             robot.shooterMotor.setPower(gamepad2.right_trigger);
         }
+    }
+
+    public void wobbleArmControl() {
+
+        while (gamepad2.left_trigger > 0) {
+            robot.wobbleArm.setPosition(gamepad2.left_trigger);
+        }
+        if (gamepad2.dpad_down) {
+            robot.wobbleArm.setPosition(.5);
+        }
+        if (gamepad2.dpad_left) {
+            robot.wobbleArm.setPosition(.6);
+        }
+        if (gamepad2.dpad_up) {
+            robot.wobbleArm.setPosition(1);
+        }
+
+
+    }
+
+    public void wobbleClawControl() {
+        if (gamepad2.right_bumper) {
+            robot.wobbleClaw.setPosition(1);
+        }
+        if (gamepad2.left_bumper) {
+            robot.wobbleClaw.setPosition(0);
+        }
+
     }
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         robot.init(hardwareMap);
+        MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
+        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+        robot.shooterMotor.setMotorType(motorConfigurationType);
 
+        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
+
 
         while (!isStopRequested()) {
 
-
             driveControl();
             shootControl();
-            intake();
+            wobbleArmControl();
+            wobbleClawControl();
+            intakeControl();
 
 
         }
