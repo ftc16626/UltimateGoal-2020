@@ -13,6 +13,8 @@ public class Robot {
     public TouchSensor intakeLimit;
 
     public CRServo intakeServo;
+    public Servo wobbleArm;
+    public Servo wobbleClaw;
     public DcMotor intakeMotor;
     public DcMotor shooterMotor;
 
@@ -32,6 +34,9 @@ public class Robot {
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
+        wobbleArm = hardwareMap.get(Servo.class, "wobbleArm");
+        wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw");
+
 
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
