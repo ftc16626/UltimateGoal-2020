@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
@@ -54,12 +55,23 @@ public class MainTeleop extends LinearOpMode {
 
     }
 
+    public void driveControlTwo() {
+
+        if (gamepad1.right_trigger > 0) {
+            robot.setDrivePower(-gamepad1.left_stick_y * .3, gamepad1.left_stick_x * .3, gamepad1.right_stick_x * .3);
+        } else {
+            robot.setDrivePower(-gamepad1.left_stick_y, gamepad1.left_stick_x * 1.5, gamepad1.right_stick_x);
+        }
+
+
+    }
+
     public void shootControl() {
         if (gamepad2.b) {
 
-            robot.shooterMotor.setPower(.7);
+            robot.shooterMotor.setPower(.55);
         } else if (gamepad2.x) {
-            robot.shooterMotor.setPower(.6);
+            robot.shooterMotor.setPower(.5);
         } else {
             robot.shooterMotor.setPower(gamepad2.right_trigger);
         }
@@ -67,14 +79,11 @@ public class MainTeleop extends LinearOpMode {
 
     public void wobbleArmControl() {
 
-        while (gamepad2.left_trigger > 0) {
-            robot.wobbleArm.setPosition(gamepad2.left_trigger);
-        }
         if (gamepad2.dpad_down) {
-            robot.wobbleArm.setPosition(.5);
+            robot.wobbleArm.setPosition(.35);
         }
         if (gamepad2.dpad_left) {
-            robot.wobbleArm.setPosition(.6);
+            robot.wobbleArm.setPosition(.5);
         }
         if (gamepad2.dpad_up) {
             robot.wobbleArm.setPosition(1);
@@ -85,16 +94,20 @@ public class MainTeleop extends LinearOpMode {
 
     public void wobbleClawControl() {
         if (gamepad2.right_bumper) {
-            robot.wobbleClaw.setPosition(1);
+            robot.wobbleClaw.setPosition(0);
         }
         if (gamepad2.left_bumper) {
-            robot.wobbleClaw.setPosition(0);
+            robot.wobbleClaw.setPosition(1);
         }
 
     }
 
+
+
+
+
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
 
         robot.init(hardwareMap);
         MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
@@ -107,7 +120,24 @@ public class MainTeleop extends LinearOpMode {
 
         while (!isStopRequested()) {
 
-            driveControl();
+            if (!gamepad1.a) {
+                if (gamepad1.left_trigger > 0) {
+                    driveControlTwo();
+                } else
+                    driveControl();
+            } else if (gamepad1.a) {
+                robot.setDrivePower(0, 0, 0);
+            }
+            if (gamepad1.x) {
+                robot.setDrivePower(0, 0, -10);
+            }
+            if (gamepad1.b) {
+                robot.setDrivePower(0, 0, 10);
+            }
+            if (gamepad1.y) {
+                robot.setDrivePower(0, 0, 15);
+            }
+
             shootControl();
             wobbleArmControl();
             wobbleClawControl();
