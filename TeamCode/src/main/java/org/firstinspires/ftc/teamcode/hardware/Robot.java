@@ -63,6 +63,14 @@ public class Robot {
     }
 
 
+    public void driveAll(double power) {
+        frontLeft.setPower(power);
+        frontRight.setPower(power);
+        backLeft.setPower(power);
+        backRight.setPower(power);
+    }
+
+
     public void setDrivePower(double y, double x, double rx) {
 
         double frontLeftPower = y + x + rx;
