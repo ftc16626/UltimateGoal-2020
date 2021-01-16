@@ -121,24 +121,24 @@ public class topgoal extends OpMode {
 
         shoot();
 
-        if (runtime.seconds() > 8 && runtime.seconds() < 10.7) {
+        if (runtime.seconds() > 8 && runtime.seconds() < 11) {
             robot.frontRight.setPower(-.4);
             robot.backRight.setPower(-.4);
             robot.frontLeft.setPower(-.38);
             robot.backLeft.setPower(-.38);
         }
-        if (runtime.seconds() > 10.7 && runtime.seconds() < 13) {
+        if (runtime.seconds() > 11 && runtime.seconds() < 13.7) {
             robot.driveAll(0);
             rotate();
         }
 
-        if (runtime.seconds() > 13 && runtime.seconds() < 13.9) {
+        if (runtime.seconds() > 13.7 && runtime.seconds() < 14.6) {
             robot.setDrivePower(0,0,0);
             robot.driveAll(0);
             robot.wobbleArm.setPosition(.35);
 
         }
-        if (runtime.seconds() > 13.9 && runtime.seconds() < 14.9) {
+        if (runtime.seconds() > 14.6 && runtime.seconds() < 15.6) {
             robot.wobbleClaw.setPosition(.8);
         }
 
