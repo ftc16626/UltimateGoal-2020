@@ -28,3 +28,4 @@ Please make sure to read the [Contributing Guide](CONTRIBUTING.md) before making
 - Noah Bresler - [_@NoahBres_](https://github.com/NoahBres)
 - Devin Hall - [_@Devin34_](https://github.com/Devin34)
 - Ari Delamata - [_@Nitr0gue_](https://github.com/Nitr0gue)
+- Micah Reese - [_@ylexot_](https://github.com/ylexot)
