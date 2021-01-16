@@ -138,7 +138,7 @@ public class topgoal extends OpMode {
             robot.wobbleArm.setPosition(.35);
 
         }
-        if (runtime.seconds() > 14.6 && runtime.seconds() < 15.6) {
+        if (runtime.seconds() > 14.6 && runtime.seconds() < 15.7) {
             robot.wobbleClaw.setPosition(.8);
         }
 
