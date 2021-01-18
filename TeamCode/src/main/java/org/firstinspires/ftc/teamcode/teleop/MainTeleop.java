@@ -28,7 +28,6 @@ public class MainTeleop extends LinearOpMode {
             robot.intakeMotor.setPower(1);
             robot.intakeServo.setPower(1);
 
-
         } else if (gamepad2.right_trigger > 0 && gamepad2.a) {
             robot.intakeMotor.setPower(1);
             robot.intakeServo.setPower(1);
@@ -36,12 +35,19 @@ public class MainTeleop extends LinearOpMode {
         } else if (gamepad2.b && gamepad2.a) {
             robot.intakeMotor.setPower(1);
             robot.intakeServo.setPower(1);
+
         } else if (gamepad2.x && gamepad2.a) {
             robot.intakeMotor.setPower(1);
             robot.intakeServo.setPower(1);
+
+        } else if (gamepad2.y) {
+            robot.intakeMotor.setPower(-1);
+            robot.intakeServo.setPower(-1);
+
         } else {
             robot.intakeMotor.setPower(0);
             robot.intakeServo.setPower(0);
+
         }
     }
 
