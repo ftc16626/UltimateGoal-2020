@@ -55,29 +55,18 @@ public class topgoal extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
+    // Durations
+
+    double start = 3.5;
+
     Robot robot = new Robot();
 
-    public void shoot() {
-        if (runtime.seconds() > 3.5 && runtime.seconds() < 4) {
-            robot.intakeServo.setPower(1);
-        } else if (runtime.seconds() > 4 && runtime.seconds() < 4.5) {
-            robot.intakeServo.setPower(0);
-        }
-        if (runtime.seconds() > 6 && runtime.seconds() < 7) {
-            robot.intakeServo.setPower(1);
-        }
-
-
-        if (runtime.seconds() > 8) {
-            robot.shooterMotor.setPower(0);
-            robot.intakeServo.setPower(0);
-        }
-    }
 
     public void rotate() {
-        robot.setDrivePower(0,0,.5);
+        robot.setDrivePower(0, 0, .5);
 
     }
+
     public void strafeRight() {
         robot.frontRight.setPower(-.3);
         robot.backRight.setPower(.3);
@@ -85,6 +74,10 @@ public class topgoal extends OpMode {
         robot.backLeft.setPower(-.3);
     }
 
+    public double duration(double duration) {
+        start += duration;
+        return start;
+    }
 
 
     /*
@@ -106,7 +99,6 @@ public class topgoal extends OpMode {
     public void init_loop() {
     }
 
-
     @Override
     public void start() {
         runtime.reset();
@@ -115,33 +107,46 @@ public class topgoal extends OpMode {
 
     }
 
-
     @Override
     public void loop() {
 
-        shoot();
+        //Shoots
+        if (runtime.seconds() > start && runtime.seconds() < duration(.5)) {
+            robot.intakeServo.setPower(1);
 
-        if (runtime.seconds() > 8 && runtime.seconds() < 11.1) {
+        } else if (runtime.seconds() > start && runtime.seconds() < duration(.5)) {
+            robot.intakeServo.setPower(0);
+
+        }
+        if (runtime.seconds() > start && runtime.seconds() < duration(1)) {
+            robot.intakeServo.setPower(1);
+
+        }
+
+        //
+
+        if (runtime.seconds() > start && runtime.seconds() < duration(3.1)) {
+            robot.shooterMotor.setPower(0);
+            robot.intakeServo.setPower(0);
             robot.frontRight.setPower(-.4);
             robot.backRight.setPower(-.4);
             robot.frontLeft.setPower(-.38);
             robot.backLeft.setPower(-.38);
         }
-        if (runtime.seconds() > 11.1 && runtime.seconds() < 13.8) {
+        if (runtime.seconds() > start && runtime.seconds() < duration(2.7)) {
             robot.driveAll(0);
             rotate();
         }
 
-        if (runtime.seconds() > 13.8 && runtime.seconds() < 14.7) {
-            robot.setDrivePower(0,0,0);
+        if (runtime.seconds() > start && runtime.seconds() < duration(.9)) {
+            robot.setDrivePower(0, 0, 0);
             robot.driveAll(0);
             robot.wobbleArm.setPosition(.35);
 
         }
-        if (runtime.seconds() > 14.7 && runtime.seconds() < 15.7) {
+        if (runtime.seconds() > start && runtime.seconds() < duration(1)) {
             robot.wobbleClaw.setPosition(.8);
         }
-
 
 
     }
