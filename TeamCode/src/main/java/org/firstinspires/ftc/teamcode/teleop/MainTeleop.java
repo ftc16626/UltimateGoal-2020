@@ -18,6 +18,7 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 @TeleOp(name = "Teleop", group = "Linear Opmode")
 public class MainTeleop extends LinearOpMode {
 
+    double cruise = 0;
     Robot robot = new Robot();
 
     public void intakeControl() {
@@ -69,11 +70,22 @@ public class MainTeleop extends LinearOpMode {
     public void shootControl() {
         if (gamepad2.b) {
 
-            robot.shooterMotor.setPower(.55);
+            robot.shooterMotor.setPower(.55 + cruise);
         } else if (gamepad2.x) {
-            robot.shooterMotor.setPower(.5);
+
+            robot.shooterMotor.setPower(.5 + cruise);
         } else {
             robot.shooterMotor.setPower(gamepad2.right_trigger);
+        }
+
+    }
+
+    public void cruiseControl() {
+        if (gamepad2.dpad_up) {
+            cruise += .2;
+        }
+        if (gamepad2.dpad_down) {
+            cruise -= .2;
         }
     }
 
@@ -101,9 +113,6 @@ public class MainTeleop extends LinearOpMode {
         }
 
     }
-
-
-
 
 
     @Override
@@ -139,6 +148,7 @@ public class MainTeleop extends LinearOpMode {
             }
 
             shootControl();
+            cruiseControl();
             wobbleArmControl();
             wobbleClawControl();
             intakeControl();
