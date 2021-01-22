@@ -97,16 +97,15 @@ public class MainTeleop extends LinearOpMode {
 
     public void wobbleArmControl() {
 
-        /*
+        //All the way up
+        if (gamepad2.left_stick_y != 0) {
+            robot.wobbleArm.setPosition(.5);
+        }
+
+
+        //intermediate
         if (gamepad2.dpad_right) {
             robot.wobbleArm.setPosition(.35);
-
-        }
-        
-         */
-        //Up
-        if (gamepad2.dpad_right) {
-            robot.wobbleArm.setPosition(.5);
         }
         //Down
         if (gamepad2.dpad_left) {
