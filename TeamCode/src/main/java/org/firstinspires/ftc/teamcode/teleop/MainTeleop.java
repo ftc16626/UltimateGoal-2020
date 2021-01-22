@@ -97,13 +97,19 @@ public class MainTeleop extends LinearOpMode {
 
     public void wobbleArmControl() {
 
-        if (gamepad2.dpad_down) {
+        /*
+        if (gamepad2.dpad_right) {
             robot.wobbleArm.setPosition(.35);
+
         }
-        if (gamepad2.dpad_left) {
+        
+         */
+        //Up
+        if (gamepad2.dpad_right) {
             robot.wobbleArm.setPosition(.5);
         }
-        if (gamepad2.dpad_up) {
+        //Down
+        if (gamepad2.dpad_left) {
             robot.wobbleArm.setPosition(1);
         }
 
@@ -130,8 +136,8 @@ public class MainTeleop extends LinearOpMode {
         robot.shooterMotor.setMotorType(motorConfigurationType);
 
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        cruise = 0;
         waitForStart();
-
 
         while (!isStopRequested()) {
 

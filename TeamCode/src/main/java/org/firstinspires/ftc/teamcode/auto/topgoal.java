@@ -52,15 +52,13 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 @Autonomous(name = "topgoal", group = "Iterative Opmode")
 public class topgoal extends OpMode {
+
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-
-    // Durations
 
     double start = 3.5;
 
     Robot robot = new Robot();
-
 
     public void rotate() {
         robot.setDrivePower(0, 0, .5);
@@ -78,7 +76,6 @@ public class topgoal extends OpMode {
         start += duration;
         return start;
     }
-
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -148,9 +145,7 @@ public class topgoal extends OpMode {
             robot.wobbleClaw.setPosition(.8);
         }
 
-
     }
-
 
     /*
      * Code to run ONCE after the driver hits STOP
@@ -160,3 +155,5 @@ public class topgoal extends OpMode {
     }
 
 }
+
+
