@@ -49,7 +49,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  */
 
 @Autonomous(name = "load", group = "Iterative Opmode")
-public class load extends OpMode {
+public class Load extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 

@@ -10,10 +10,12 @@ import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Robot {
 
+
     public TouchSensor intakeLimit;
 
     public CRServo intakeServo;
-    public Servo wobbleArm;
+    //public Servo wobbleArm;
+    public DcMotor wobbleArm;
     public Servo wobbleClaw;
     public DcMotor intakeMotor;
     public DcMotor shooterMotor;
@@ -28,6 +30,7 @@ public class Robot {
 
 
     public void init(HardwareMap hwMap) {
+        //Initialize Hardware
 
         hardwareMap = hwMap;
 
@@ -35,7 +38,8 @@ public class Robot {
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
-        wobbleArm = hardwareMap.get(Servo.class, "wobbleArm");
+        //wobbleArm = hardwareMap.get(Servo.class, "wobbleArm");
+        wobbleArm = hardwareMap.get(DcMotor.class, "wobbleArm");
         wobbleClaw = hardwareMap.get(Servo.class, "wobbleClaw");
 
 
@@ -45,10 +49,11 @@ public class Robot {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
 
 
+        //Because of the way the motors are mounted the left side needs to be flipped
         frontLeft.setDirection(REVERSE);
         backLeft.setDirection(REVERSE);
 
-
+        //Sets all drive motors to zero to make sure they don't drive off unintentionally during initialization
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
@@ -64,7 +69,7 @@ public class Robot {
     }
 
 
-    public void driveAll(double power) {
+    public void driveAll(double power) { //Quick way of setting all of the motors to run at certain power
         frontLeft.setPower(power);
         frontRight.setPower(power);
         backLeft.setPower(power);
@@ -72,7 +77,7 @@ public class Robot {
     }
 
 
-    public void setDrivePower(double y, double x, double rx) {
+    public void setDrivePower(double y, double x, double rx) { //Code to drive robot in holonomic fashion
 
         double frontLeftPower = y + x + rx;
         double backLeftPower = y - x + rx;

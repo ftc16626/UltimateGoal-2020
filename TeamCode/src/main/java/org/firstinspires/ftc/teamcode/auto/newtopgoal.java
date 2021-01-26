@@ -51,7 +51,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  */
 
 @Autonomous(name = "newtopgoal", group = "Iterative Opmode")
-public class newtopgoal extends OpMode {
+public class NewTopGoal extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -139,7 +139,7 @@ public class newtopgoal extends OpMode {
         if (runtime.seconds() > start && runtime.seconds() < duration(1)) {
             robot.setDrivePower(0, 0, 0);
             robot.driveAll(0);
-            robot.wobbleArm.setPosition(.35);
+            robot.wobbleArm.setTargetPosition(0);
 
         }
         if (runtime.seconds() > start && runtime.seconds() < duration(1.1)) {
