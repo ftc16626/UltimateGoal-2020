@@ -12,6 +12,8 @@ public class Robot {
 
 
     public TouchSensor intakeLimit;
+    public TouchSensor armLimit1;
+    public TouchSensor armLimit2;
 
     public CRServo intakeServo;
     //public Servo wobbleArm;
@@ -35,6 +37,8 @@ public class Robot {
         hardwareMap = hwMap;
 
         intakeLimit = hardwareMap.get(TouchSensor.class, "intakeLimit");
+        armLimit1 = hardwareMap.get(TouchSensor.class, "armLimit1");
+        armLimit2 = hardwareMap.get(TouchSensor.class, "armLimit2");
         intakeServo = hardwareMap.get(CRServo.class, "intakeServo");
         shooterMotor = hardwareMap.get(DcMotor.class, "shooterMotor");
         intakeMotor = hardwareMap.get(DcMotor.class, "intakeMotor");
