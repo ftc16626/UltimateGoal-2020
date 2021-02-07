@@ -1,4 +1,13 @@
-package org.firstinspires.ftc.teamcode.auto;/* Copyright (c) 2017 FIRST. All rights reserved.
+package org.firstinspires.ftc.teamcode.auto;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.util.ElapsedTime;
+
+import org.firstinspires.ftc.teamcode.hardware.Robot;
+        /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
  * are permitted (subject to the limitations in the disclaimer below) provided that
@@ -28,14 +37,13 @@ package org.firstinspires.ftc.teamcode.auto;/* Copyright (c) 2017 FIRST. All rig
  */
 
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
-import com.qualcomm.robotcore.util.ElapsedTime;
+        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+        import com.qualcomm.robotcore.hardware.DcMotor;
+        import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+        import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.hardware.Robot;
+        import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
@@ -50,22 +58,35 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-@Disabled
-@Autonomous(name = "topgoal", group = "Iterative Opmode")
-public class TopGoal extends OpMode {
 
+@Autonomous(name = "original topgoal", group = "OG Opmodes")
+public class OriginalTopGoal extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
-    double start = 3.5;
-
     Robot robot = new Robot();
 
-    public void rotate() {
-        robot.setDrivePower(0, 0, .5);
+    public void shoot() {
+        if (runtime.seconds() > 3.5 && runtime.seconds() < 4) {
+            robot.intakeServo.setPower(1);
+        } else if (runtime.seconds() > 4 && runtime.seconds() < 4.5) {
+            robot.intakeServo.setPower(0);
+        }
+        if (runtime.seconds() > 6 && runtime.seconds() < 7) {
+            robot.intakeServo.setPower(1);
+        }
 
+
+        if (runtime.seconds() > 8) {
+            robot.shooterMotor.setPower(0);
+            robot.intakeServo.setPower(0);
+        }
     }
 
+    public void rotate() {
+        robot.setDrivePower(0,0,.5);
+
+    }
     public void strafeRight() {
         robot.frontRight.setPower(-.3);
         robot.backRight.setPower(.3);
@@ -73,10 +94,7 @@ public class TopGoal extends OpMode {
         robot.backLeft.setPower(-.3);
     }
 
-    public double duration(double duration) {
-        start += duration;
-        return start;
-    }
+
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -97,6 +115,7 @@ public class TopGoal extends OpMode {
     public void init_loop() {
     }
 
+
     @Override
     public void start() {
         runtime.reset();
@@ -105,46 +124,37 @@ public class TopGoal extends OpMode {
 
     }
 
+
     @Override
     public void loop() {
 
-        //Shoots
-        if (runtime.seconds() > start && runtime.seconds() < duration(.5)) {
-            robot.intakeServo.setPower(1);
+        shoot();
 
-        } else if (runtime.seconds() > start && runtime.seconds() < duration(.5)) {
-            robot.intakeServo.setPower(0);
-
+        if (runtime.seconds() > 8 && runtime.seconds() < 11.1) {
+            robot.frontRight.setPower(-.4);
+            robot.backRight.setPower(-.4);
+            robot.frontLeft.setPower(-.38);
+            robot.backLeft.setPower(-.38);
         }
-        if (runtime.seconds() > start && runtime.seconds() < duration(1)) {
-            robot.intakeServo.setPower(1);
-
-        }
-
-        //
-
-        if (runtime.seconds() > start && runtime.seconds() < duration(3.1)) {
-            robot.shooterMotor.setPower(0);
-            robot.intakeServo.setPower(0);
-
-            robot.driveAll(.3);
-        }
-        if (runtime.seconds() > start && runtime.seconds() < duration(2.8)) {
+        if (runtime.seconds() > 11.1 && runtime.seconds() < 13.8) {
             robot.driveAll(0);
             rotate();
         }
 
-        if (runtime.seconds() > start && runtime.seconds() < duration(1)) {
-            robot.setDrivePower(0, 0, 0);
+        if (runtime.seconds() > 13.8 && runtime.seconds() < 14.7) {
+            robot.setDrivePower(0,0,0);
             robot.driveAll(0);
-            robot.wobbleArm.setTargetPosition(0);
+            robot.wobbleArm.setTargetPosition(0/*needs to adjusted for motor*/);
 
         }
-        if (runtime.seconds() > start && runtime.seconds() < duration(1.1)) {
+        if (runtime.seconds() > 14.7 && runtime.seconds() < 15.7) {
             robot.wobbleClaw.setPosition(.8);
         }
 
+
+
     }
+
 
     /*
      * Code to run ONCE after the driver hits STOP
@@ -154,5 +164,4 @@ public class TopGoal extends OpMode {
     }
 
 }
-
 

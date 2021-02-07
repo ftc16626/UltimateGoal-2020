@@ -51,8 +51,8 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 @Disabled
-@Autonomous(name = "topgoal", group = "Iterative Opmode")
-public class TopGoal extends OpMode {
+@Autonomous(name = "newtopgoal", group = "Iterative Opmode")
+public class NewTopGoal extends OpMode {
 
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
@@ -90,6 +90,7 @@ public class TopGoal extends OpMode {
         robot.shooterMotor.setMotorType(motorConfigurationType);
 
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.setDriveUsingEncoders();
         robot.wobbleClaw.setPosition(0);
     }
 
@@ -126,8 +127,10 @@ public class TopGoal extends OpMode {
         if (runtime.seconds() > start && runtime.seconds() < duration(3.1)) {
             robot.shooterMotor.setPower(0);
             robot.intakeServo.setPower(0);
-
-            robot.driveAll(.3);
+            robot.frontRight.setPower(-.4);
+            robot.backRight.setPower(-.4);
+            robot.frontLeft.setPower(-.38);
+            robot.backLeft.setPower(-.38);
         }
         if (runtime.seconds() > start && runtime.seconds() < duration(2.8)) {
             robot.driveAll(0);

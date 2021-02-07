@@ -52,8 +52,8 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name = "park", group = "Iterative Opmode")
-public class park extends OpMode {
+@Autonomous(name = "park", group = "OG Opmodes")
+public class Park extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
 
