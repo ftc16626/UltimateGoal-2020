@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,13 +9,13 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 
-@TeleOp(name = "Teleop", group = "Linear Opmode")
+@TeleOp(name = "Teleop", group = "Teleop")
+@Config
 public class MainTeleop extends LinearOpMode {
 
-    double cruise = 0;
     int test = 0;
-    boolean clawOpen;
     Robot robot = new Robot();
+    public static double topGoalSpeedFraction = 0.55;
 
     public void intakeControl() {
 
@@ -71,10 +72,10 @@ public class MainTeleop extends LinearOpMode {
     public void shootControl() {
         if (gamepad2.b) {
             //Faster shooter speed for topgoal
-            robot.shooterMotor.setPower(.55 + cruise);
+            robot.shooterMotor.setPower(.525);
         } else if (gamepad2.x) {
             //Slower shooter speed for powershot
-            robot.shooterMotor.setPower(.5 + cruise);
+            robot.shooterMotor.setPower(.5);
         } else {
             //Allows manual control over speed (Not very useful though)
             robot.shooterMotor.setPower(gamepad2.right_trigger);
@@ -83,21 +84,21 @@ public class MainTeleop extends LinearOpMode {
 
     }
 
-
-    public void cruiseControlDown() {
-
-        boolean gamepadLastState2 = false;
-
-        if (gamepad2.dpad_down && !gamepadLastState2) {
-            //cruise -= .2;
-            test -= 2;
-        }
-        telemetry.addData("gamepadlaststate2", gamepadLastState2);
-        gamepadLastState2 = gamepad2.dpad_down;
-    }
-
-
     public void wobbleArmControl() {
+
+        if (gamepad2.dpad_left) {
+            robot.wobbleArm.setPower(-.3);
+        } else if (gamepad2.dpad_right) {
+            robot.wobbleArm.setPower(.3);
+        } else if (gamepad2.dpad_up) {
+            robot.wobbleArm.setTargetPosition(600);
+            robot.wobbleArm.setPower(.3);
+            telemetry.addData("Motor Position", String.valueOf(robot.wobbleArm.getCurrentPosition()));
+            telemetry.update();
+        } else {
+            robot.wobbleArm.setPower(0);
+        }
+
 /*
         //All the way up
         if (gamepad2.left_stick_y != 0) {
@@ -115,13 +116,16 @@ public class MainTeleop extends LinearOpMode {
 
  */
         //All the way up
+        /*
         if (gamepad2.left_stick_y != 0) {
-            if (robot.armLimit2.isPressed()) {
-                robot.wobbleArm.setPower(0);
-            } else if (!robot.armLimit2.isPressed()) {
-                robot.wobbleArm.setPower(-.1);
-            }
+            robot.wobbleArm.setPower(-.1);
         }
+        if (robot.armLimit2.isPressed() && gamepad2.left_stick_y == 0 && !gamepad2.dpad_right) {
+            robot.wobbleArm.setPower(0);
+
+        }
+
+
 
 
         //intermediate
@@ -133,14 +137,15 @@ public class MainTeleop extends LinearOpMode {
 
         //Down
         if (gamepad2.dpad_left) {
-            if (robot.armLimit1.isPressed()) {
-                robot.wobbleArm.setPower(0);
-            } else if (!robot.armLimit1.isPressed()) {
-                robot.wobbleArm.setPower(.1);
-            }
+            robot.wobbleArm.setPower(.1);
         }
-    }
+        if (robot.armLimit1.isPressed() && !gamepad2.dpad_left && !gamepad2.dpad_right) {
+            robot.wobbleArm.setPower(0);
+        }
 
+         */
+
+    }
 
     public void wobbleClawControl() {
         if (gamepad2.right_bumper) {
@@ -167,55 +172,26 @@ public class MainTeleop extends LinearOpMode {
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.wobbleArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        cruise = 0;
-
 
         waitForStart();
+
 
         //Code to run after START is pressed
         while (!isStopRequested()) {
 
 
-            if (!gamepad1.a) {
-                if (gamepad1.left_trigger > 0) {
-                    driveControlTwo(); //Normal drive where the shooter is the back
-                } else
-                    driveControl(); //Normal drive where the shooter is the front
-            } else if (gamepad1.a) {
-                robot.setDrivePower(0, 0, 0);
-            }
-            if (gamepad1.x) {
-                robot.setDrivePower(0, 0, -10);
-            }
-            if (gamepad1.b) {
-                robot.setDrivePower(0, 0, 10);
-            }
-            if (gamepad1.y) {
-                robot.setDrivePower(0, 0, 15);
-            }
-/*
+            if (gamepad1.left_trigger > 0) {
+                driveControlTwo(); //Normal drive where the shooter is the back
+            } else
+                driveControl(); //Normal drive where the shooter is the front
+
             shootControl();
-            cruiseControlDown();
 
             wobbleClawControl();
 
-
             intakeControl();
 
-
-*/
-
             wobbleArmControl();
-
-            boolean gamepadLastState = false;
-
-
-            if (gamepad2.a && !gamepadLastState) {
-                // cruise += .2;
-                test += 2;
-            }
-            gamepadLastState = gamepad2.a;
-
 
             if (robot.armLimit1.isPressed()) {
                 telemetry.addData("limit1", "ooooooooooo");
@@ -227,7 +203,6 @@ public class MainTeleop extends LinearOpMode {
             if (robot.intakeLimit.isPressed()) {
                 telemetry.addData("intake", "eeeeeeeeeee");
             }
-            telemetry.addData("Hmm?", test);
             telemetry.update();
         }
     }

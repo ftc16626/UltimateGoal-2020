@@ -29,6 +29,7 @@ package org.firstinspires.ftc.teamcode.auto;/* Copyright (c) 2017 FIRST. All rig
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -48,7 +49,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name = "load", group = "Iterative Opmode")
+@Autonomous(name = "load", group = "Tool")
 public class Load extends OpMode {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();

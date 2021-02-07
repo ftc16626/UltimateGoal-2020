@@ -29,6 +29,7 @@ package org.firstinspires.ftc.teamcode.auto;/* Copyright (c) 2017 FIRST. All rig
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
@@ -49,7 +50,7 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
+@Disabled
 @Autonomous(name = "newtopgoal", group = "Iterative Opmode")
 public class NewTopGoal extends OpMode {
 

@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
 
-@TeleOp(name = "LimitTest", group = "Linear Opmode")
+@TeleOp(name = "LimitTest", group = "Tool")
 public class LimitTest extends LinearOpMode {
 
     Robot robot = new Robot();
