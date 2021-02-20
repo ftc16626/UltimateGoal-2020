@@ -5,20 +5,25 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
 
 public class Robot {
 
 
+    public static final double CLAW_CLOSED = .65;
+    public static final double CLAW_OPENED = 1;
+
     public TouchSensor intakeLimit;
     public TouchSensor armLimit1;
     public TouchSensor armLimit2;
 
-    public CRServo intakeServo;
     //public Servo wobbleArm;
     public DcMotor wobbleArm;
     public Servo wobbleClaw;
+
+    public CRServo intakeServo;
     public DcMotor intakeMotor;
     public DcMotor shooterMotor;
 
@@ -28,14 +33,13 @@ public class Robot {
     public DcMotor backRight;
 
 
-    HardwareMap hardwareMap;
 
 
-    public void init(HardwareMap hwMap) {
+
+
+
+    public void init(HardwareMap hardwareMap) {
         //Initialize Hardware
-
-        hardwareMap = hwMap;
-
         intakeLimit = hardwareMap.get(TouchSensor.class, "intakeLimit");
         armLimit1 = hardwareMap.get(TouchSensor.class, "armLimit1");
         armLimit2 = hardwareMap.get(TouchSensor.class, "armLimit2");
@@ -62,6 +66,13 @@ public class Robot {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+
+        //Sets Shooter Motor to run with encoders
+        MotorConfigurationType motorConfigurationType = shooterMotor.getMotorType().clone();
+        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
+        shooterMotor.setMotorType(motorConfigurationType);
+
+        shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
 

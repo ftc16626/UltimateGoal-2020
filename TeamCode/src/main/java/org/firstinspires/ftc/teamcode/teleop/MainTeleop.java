@@ -13,9 +13,10 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
 @Config
 public class MainTeleop extends LinearOpMode {
 
-    int test = 0;
+
     Robot robot = new Robot();
-    public static double topGoalSpeedFraction = 0.55;
+
+    //public static double topGoalSpeedFraction = 0.55;
 
     public void intakeControl() {
 
@@ -149,10 +150,10 @@ public class MainTeleop extends LinearOpMode {
 
     public void wobbleClawControl() {
         if (gamepad2.right_bumper) {
-            robot.wobbleClaw.setPosition(0);
+            robot.wobbleClaw.setPosition(Robot.CLAW_CLOSED);
         }
         if (gamepad2.left_bumper) {
-            robot.wobbleClaw.setPosition(.4);
+            robot.wobbleClaw.setPosition(Robot.CLAW_OPENED);
         }
 
     }
@@ -164,14 +165,17 @@ public class MainTeleop extends LinearOpMode {
         //Init phase of opmode before START is pressed
         robot.init(hardwareMap);
 
-        //Allows shooter motor to reach its max speed
+        /*
         MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
         motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
         robot.shooterMotor.setMotorType(motorConfigurationType);
 
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+         */
         robot.wobbleArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
         waitForStart();
 
