@@ -29,7 +29,6 @@ package org.firstinspires.ftc.teamcode.auto;/* Copyright (c) 2017 FIRST. All rig
 
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 

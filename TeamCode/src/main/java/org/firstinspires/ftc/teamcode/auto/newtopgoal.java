@@ -85,11 +85,14 @@ public class NewTopGoal extends OpMode {
     public void init() {
         telemetry.addData("Status", "Initialized");
         robot.init(hardwareMap);
+        /*
         MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
         motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
         robot.shooterMotor.setMotorType(motorConfigurationType);
 
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+         */
         robot.setDriveUsingEncoders();
         robot.wobbleClaw.setPosition(0);
     }

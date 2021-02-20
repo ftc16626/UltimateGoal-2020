@@ -36,15 +36,6 @@ import org.firstinspires.ftc.teamcode.hardware.Robot;
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-
-        import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-        import com.qualcomm.robotcore.hardware.DcMotor;
-        import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
-        import com.qualcomm.robotcore.util.ElapsedTime;
-
-        import org.firstinspires.ftc.teamcode.hardware.Robot;
-
 /**
  * This file contains an example of an iterative (Non-Linear) "OpMode".
  * An OpMode is a 'program' that runs in either the autonomous or the teleop period of an FTC match.
@@ -103,11 +94,14 @@ public class OriginalTopGoal extends OpMode {
     public void init() {
         telemetry.addData("Status", "Initialized");
         robot.init(hardwareMap);
+        /*
         MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
         motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
         robot.shooterMotor.setMotorType(motorConfigurationType);
 
         robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+         */
         robot.wobbleClaw.setPosition(0);
     }
 
