@@ -19,25 +19,30 @@ public class TankTest extends LinearOpMode {
 
         robot.init(hardwareMap);
 
-        robot.setDriveUsingEncoders();
-        robot.wobbleArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
         waitForStart();
 
+
         while (!isStopRequested()) {
-
-
-            if (gamepad1.left_stick_y > 0) {
-                robot.frontRight.setPower(1);
-                robot.wobbleArm.setPower(.1);
-
+            if (gamepad2.a)
+                robot.shooterMotor.setPower(.2);
+            if (gamepad2.b)
+                robot.shooterMotor.setPower(.4);
+            if (gamepad2.y)
+                robot.shooterMotor.setPower(.45);
+            if (gamepad2.x)
+                robot.shooterMotor.setPower(.55);
+            if (gamepad2.right_trigger > 0) {
+                robot.intakeServo.setPower(1);
+                robot.intakeMotor.setPower(1);
+            } else {
+                robot.intakeServo.setPower(0);
+                robot.intakeMotor.setPower(0);
             }
-            telemetry.addData("FrontLeft encoder", String.valueOf(robot.frontLeft.getCurrentPosition()));
-            telemetry.addData("BackLeft encoder", String.valueOf(robot.backLeft.getCurrentPosition()));
-            telemetry.addData("FrontRight encoder", String.valueOf(robot.frontRight.getCurrentPosition()));
-            telemetry.addData("BackRight", String.valueOf(robot.backRight.getCurrentPosition()));
-            telemetry.addData("Arm", String.valueOf(robot.wobbleArm.getCurrentPosition()));
-            telemetry.update();
+
         }
+
     }
+
 }
+
+
