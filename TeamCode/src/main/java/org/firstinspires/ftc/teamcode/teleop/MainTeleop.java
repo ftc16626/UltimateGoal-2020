@@ -1,22 +1,33 @@
 package org.firstinspires.ftc.teamcode.teleop;
 
+import android.util.Log;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
+import static org.firstinspires.ftc.teamcode.VeloPIDTuner.MOTOR_GEAR_RATIO;
+import static org.firstinspires.ftc.teamcode.VeloPIDTuner.MOTOR_TICKS_PER_REV;
+import static org.firstinspires.ftc.teamcode.hardware.Robot.CLAW_CLOSED;
+import static org.firstinspires.ftc.teamcode.hardware.Robot.CLAW_OPENED;
+import static org.firstinspires.ftc.teamcode.hardware.Robot.MOTOR_MAX_RPM;
 
 @TeleOp(name = "Teleop", group = "Teleop")
 @Config
 public class MainTeleop extends LinearOpMode {
 
-
     Robot robot = new Robot();
+    private double shooterVelo = 0.0;
+    private ElapsedTime timer;
 
-    //public static double topGoalSpeedFraction = 0.55;
+    public static double rpmToTicksPerSecond(double rpm) {
+        return rpm * MOTOR_TICKS_PER_REV / MOTOR_GEAR_RATIO / 60;
+    }
 
     public void intakeControl() {
 
@@ -50,12 +61,11 @@ public class MainTeleop extends LinearOpMode {
 
     public void driveControl() {
 
-        if (gamepad1.right_trigger > 0) {
+        if (gamepad1.right_trigger > 0) { //Makes robot drive slower
             robot.setDrivePower(gamepad1.left_stick_y * .3, -gamepad1.left_stick_x * .3, gamepad1.right_stick_x * .3);
-        } else {
+        } else { //Allows robot to drive upto max speed
             robot.setDrivePower(gamepad1.left_stick_y, -gamepad1.left_stick_x * 1.5, gamepad1.right_stick_x);
         }
-
 
     }
 
@@ -67,19 +77,25 @@ public class MainTeleop extends LinearOpMode {
             robot.setDrivePower(-gamepad1.left_stick_y, gamepad1.left_stick_x * 1.5, gamepad1.right_stick_x);
         }
 
-
     }
 
     public void shootControl() {
         if (gamepad2.b) {
             //Faster shooter speed for topgoal
-            robot.shooterMotor.setPower(.525);
+            setVelocity((DcMotorEx) robot.shooterMotor, (.5 * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
+            printVelocities((DcMotorEx) robot.shooterMotor, (.5 * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
+            //robot.shooterMotor.setPower(.5); //Speed before change was .5
+
         } else if (gamepad2.x) {
             //Slower shooter speed for powershot
-            robot.shooterMotor.setPower(.5);
+            setVelocity((DcMotorEx) robot.shooterMotor, (.45 * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
+            printVelocities((DcMotorEx) robot.shooterMotor, (.45 * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
+            //robot.shooterMotor.setPower(.45); //Speed before change was .45
+
         } else {
             //Allows manual control over speed (Not very useful though)
-            robot.shooterMotor.setPower(gamepad2.right_trigger);
+            setVelocity((DcMotorEx) robot.shooterMotor, (gamepad2.right_trigger * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
+            printVelocities((DcMotorEx) robot.shooterMotor, (gamepad2.right_trigger * rpmToTicksPerSecond(MOTOR_MAX_RPM)));
 
         }
 
@@ -100,89 +116,44 @@ public class MainTeleop extends LinearOpMode {
             robot.wobbleArm.setPower(0);
         }
 
-/*
-        //All the way up
-        if (gamepad2.left_stick_y != 0) {
-            robot.wobbleArm.setPosition(1);
-        }
-
-        //intermediate
-        if (gamepad2.dpad_right) {
-            robot.wobbleArm.setPosition(.8);
-        }
-        //Down
-        if (gamepad2.dpad_left) {
-            robot.wobbleArm.setPosition(.2);
-        }
-
- */
-        //All the way up
-        /*
-        if (gamepad2.left_stick_y != 0) {
-            robot.wobbleArm.setPower(-.1);
-        }
-        if (robot.armLimit2.isPressed() && gamepad2.left_stick_y == 0 && !gamepad2.dpad_right) {
-            robot.wobbleArm.setPower(0);
-
-        }
-
-
-
-
-        //intermediate
-        if (gamepad2.dpad_right) {
-            robot.wobbleArm.setTargetPosition(444);
-            robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.wobbleArm.setPower(.1);
-        }
-
-        //Down
-        if (gamepad2.dpad_left) {
-            robot.wobbleArm.setPower(.1);
-        }
-        if (robot.armLimit1.isPressed() && !gamepad2.dpad_left && !gamepad2.dpad_right) {
-            robot.wobbleArm.setPower(0);
-        }
-
-         */
 
     }
 
     public void wobbleClawControl() {
         if (gamepad2.right_bumper) {
-            robot.wobbleClaw.setPosition(Robot.CLAW_CLOSED);
+            robot.wobbleClaw.setPosition(CLAW_CLOSED);
         }
         if (gamepad2.left_bumper) {
-            robot.wobbleClaw.setPosition(Robot.CLAW_OPENED);
+            robot.wobbleClaw.setPosition(CLAW_OPENED);
         }
 
     }
 
+    private void setVelocity(DcMotorEx motor, double power) {
+        Log.i("power", Double.toString(power));
+        motor.setVelocity(power);
+    }
+
+    private void printVelocities(DcMotorEx motor, double target) {
+        telemetry.addData("targetVelocity", target);
+
+        double motorVelo = motor.getVelocity();
+        telemetry.addData("velocity", motorVelo);
+        telemetry.addData("error", target - motorVelo);
+    }
 
     @Override
     public void runOpMode() {
 
-        //Init phase of opmode before START is pressed
+        //INIT phase of opmode before START is pressed
         robot.init(hardwareMap);
-
-        /*
-        MotorConfigurationType motorConfigurationType = robot.shooterMotor.getMotorType().clone();
-        motorConfigurationType.setAchieveableMaxRPMFraction(1.0);
-        robot.shooterMotor.setMotorType(motorConfigurationType);
-
-        robot.shooterMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-         */
         robot.wobbleArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-
         waitForStart();
 
-
-        //Code to run after START is pressed
+        //Code to loop after START is pressed
         while (!isStopRequested()) {
-
 
             if (gamepad1.left_trigger > 0) {
                 driveControlTwo(); //Normal drive where the shooter is the back
@@ -197,17 +168,9 @@ public class MainTeleop extends LinearOpMode {
 
             wobbleArmControl();
 
-            if (robot.armLimit1.isPressed()) {
-                telemetry.addData("limit1", "ooooooooooo");
-            }
-            if (robot.armLimit2.isPressed()) {
-                //Button (all the way back)
-                telemetry.addData("limit2", "aaaaaaaaaaaa");
-            }
-            if (robot.intakeLimit.isPressed()) {
-                telemetry.addData("intake", "eeeeeeeeeee");
-            }
             telemetry.update();
+
         }
     }
+
 }
