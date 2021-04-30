@@ -29,6 +29,7 @@ public class ParkAllRedImproved extends LinearOpMode {
     private final double POWER_SHOT_ONE = 6.0; //X coordinate of PS ONE
     private final double POWER_SHOT_TWO = 15.5; //X coordinate of PS TWO
     private final double POWER_SHOT_THREE = 23.5; //X coordinate of PS THREE
+    public static final int DOWN_POS = 400; //645
 
     Robot robot = new Robot();
     Pose2d startPose = new Pose2d(-59, -17, 0.0); //Starting position of robot
@@ -98,15 +99,15 @@ public class ParkAllRedImproved extends LinearOpMode {
     private void zero() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(startPose);
-        robot.shooterMotor.setPower(.45);
+        robot.shooterMotor.setPower(.47);
 
         Trajectory one = drive.trajectoryBuilder(startPose)
-                .lineToConstantHeading(new Vector2d(-2.0, -35.0))
+                .lineToConstantHeading(new Vector2d(2.0, -37.0))
 
                 .build();
 
         Trajectory two = drive.trajectoryBuilder(one.end())
-                .lineToSplineHeading(new Pose2d(3.0, POWER_SHOT_ONE, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(2, POWER_SHOT_ONE, Math.toRadians(180)))
                 .build();
 
         Trajectory twoshottwo = drive.trajectoryBuilder(two.end())
@@ -119,7 +120,7 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         Trajectory three = drive.trajectoryBuilder(two.end())
-                .splineToLinearHeading(new Pose2d(-40.0, 11, Math.toRadians(270)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-41, 12, Math.toRadians(270)), Math.toRadians(180))
                 .build();
 
         Trajectory four = drive.trajectoryBuilder(three.end())
@@ -138,7 +139,7 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         drive.followTrajectory(one);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
         while (robot.wobbleArm.isBusy()) {
@@ -211,7 +212,7 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         drive.followTrajectory(four);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
         while (robot.wobbleArm.isBusy()) {
@@ -230,7 +231,7 @@ public class ParkAllRedImproved extends LinearOpMode {
     private void one() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(startPose);
-        robot.shooterMotor.setPower(.45);
+        robot.shooterMotor.setPower(.47);
 
         Trajectory one = drive.trajectoryBuilder(startPose)
                 .lineToConstantHeading(new Vector2d(16.0, -12.0))
@@ -238,37 +239,37 @@ public class ParkAllRedImproved extends LinearOpMode {
                 .build();
 
         Trajectory two = drive.trajectoryBuilder(one.end())
-                .lineToSplineHeading(new Pose2d(-2.0, POWER_SHOT_ONE, Math.toRadians(180)))
+                .lineToSplineHeading(new Pose2d(-2.0, POWER_SHOT_ONE + 3.0, Math.toRadians(180)))
                 .build();
 
         Trajectory twoshottwo = drive.trajectoryBuilder(two.end())
-                .strafeRight(POWER_SHOT_TWO - POWER_SHOT_ONE)
+                .strafeRight((POWER_SHOT_TWO - POWER_SHOT_ONE) + 3.0)
                 .build();
 
         Trajectory twoshotthree = drive.trajectoryBuilder(twoshottwo.end())
-                .strafeRight(POWER_SHOT_THREE - POWER_SHOT_TWO)
+                .strafeRight((POWER_SHOT_THREE - POWER_SHOT_TWO) - 3.0)
                 .build();
 
 
         Trajectory three = drive.trajectoryBuilder(two.end())
-                .splineToLinearHeading(new Pose2d(-40.0, 9.5, Math.toRadians(270)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-45, 12.5, Math.toRadians(270)), Math.toRadians(180))
                 .build();
 
         Trajectory four = drive.trajectoryBuilder(three.end())
 
-                .splineToConstantHeading(new Vector2d(41.0, 24.5), 0.0)
+                .splineToConstantHeading(new Vector2d(41.0, 26.5), 0.0)
 
                 .build();
 
         Trajectory five = drive.trajectoryBuilder(four.end())
 
-                .strafeRight(26.0)
+                .strafeRight(27.0)
 
                 .build();
 
 
         drive.followTrajectory(one);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
         while (robot.wobbleArm.isBusy()) {
@@ -341,7 +342,7 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         drive.followTrajectory(four);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
         while (robot.wobbleArm.isBusy()) {
@@ -351,7 +352,7 @@ public class ParkAllRedImproved extends LinearOpMode {
         robot.wobbleArm.setPower(0);
         robot.wobbleClaw.setPosition(Robot.CLAW_OPENED);
 
-
+/*
         robot.wobbleArm.setTargetPosition(0);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
@@ -360,6 +361,8 @@ public class ParkAllRedImproved extends LinearOpMode {
             telemetry.update();
         }
         robot.wobbleArm.setPower(0);
+
+ */
         drive.followTrajectory(five);
 
         PoseStorage.currentPose = drive.getPoseEstimate();
@@ -370,10 +373,10 @@ public class ParkAllRedImproved extends LinearOpMode {
     private void four() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         drive.setPoseEstimate(startPose);
-        robot.shooterMotor.setPower(.45);
+        robot.shooterMotor.setPower(.47);
 
         Trajectory one = drive.trajectoryBuilder(startPose)
-                .lineToConstantHeading(new Vector2d(45.0, -36.0))
+                .lineToConstantHeading(new Vector2d(49.0, -36.0))
 
                 .build();
 
@@ -386,20 +389,20 @@ public class ParkAllRedImproved extends LinearOpMode {
                 .build();
 
         Trajectory twoshotthree = drive.trajectoryBuilder(twoshottwo.end())
-                .strafeRight(POWER_SHOT_THREE - POWER_SHOT_TWO)
+                .strafeRight((POWER_SHOT_THREE - POWER_SHOT_TWO))
                 .build();
 
 
         Trajectory three = drive.trajectoryBuilder(two.end())
 
-                .splineToLinearHeading(new Pose2d(-41.0, 11, Math.toRadians(270)), Math.toRadians(180))
+                .splineToLinearHeading(new Pose2d(-44, 10, Math.toRadians(270)), Math.toRadians(180))
 
                 .build();
 
         Trajectory four = drive.trajectoryBuilder(three.end())
 
-                .splineToConstantHeading(new Vector2d(67, 0.5), 0.0)
-
+               // .splineToConstantHeading(new Vector2d(68, 0.5), 0.0)
+                .splineToLinearHeading(new Pose2d(67, 0.5, Math.toRadians(280)), 0.0)
                 .build();
 
         Trajectory five = drive.trajectoryBuilder(four.end())
@@ -410,7 +413,7 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         drive.followTrajectory(one);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.wobbleArm.setPower(.15);
         while (robot.wobbleArm.isBusy()) {
@@ -483,9 +486,9 @@ public class ParkAllRedImproved extends LinearOpMode {
 
 
         drive.followTrajectory(four);
-        robot.wobbleArm.setTargetPosition(645);
+        robot.wobbleArm.setTargetPosition(DOWN_POS);
         robot.wobbleArm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        robot.wobbleArm.setPower(.50);
+        robot.wobbleArm.setPower(.10);
         while (robot.wobbleArm.isBusy()) {
             telemetry.addData("waiting", "...");
             telemetry.update();
