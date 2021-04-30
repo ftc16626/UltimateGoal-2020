@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.hardware;
 
+import com.acmerobotics.roadrunner.kinematics.Kinematics;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -15,10 +16,11 @@ import static org.firstinspires.ftc.teamcode.VeloPIDTuner.MOTOR_TICKS_PER_REV;
 
 public class Robot {
 
-    public static final double CLAW_CLOSED = .55;
-    public static final double CLAW_OPENED = 1;
+    public static final double CLAW_CLOSED = 1;
+    public static final double CLAW_OPENED = .55;
     public static double MOTOR_MAX_RPM = 5400;
     public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(24, 0, 24, getMotorVelocityF()); //was 15
+
 
     //SENSORS
     public TouchSensor intakeLimit;
