@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.Robot;
 
-@Disabled
+
 @TeleOp(name = "Tank", group = "Tool")
 public class TankTest extends LinearOpMode {
 
@@ -18,26 +18,14 @@ public class TankTest extends LinearOpMode {
     public void runOpMode() {
 
         robot.init(hardwareMap);
-
+        robot.wobbleArm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.wobbleArm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         waitForStart();
 
 
         while (!isStopRequested()) {
-            if (gamepad2.a)
-                robot.shooterMotor.setPower(.2);
-            if (gamepad2.b)
-                robot.shooterMotor.setPower(.4);
-            if (gamepad2.y)
-                robot.shooterMotor.setPower(.45);
-            if (gamepad2.x)
-                robot.shooterMotor.setPower(.55);
-            if (gamepad2.right_trigger > 0) {
-                robot.intakeServo.setPower(1);
-                robot.intakeMotor.setPower(1);
-            } else {
-                robot.intakeServo.setPower(0);
-                robot.intakeMotor.setPower(0);
-            }
+            telemetry.addData("encoder", robot.wobbleArm.getCurrentPosition());
+            telemetry.update();
 
         }
 
