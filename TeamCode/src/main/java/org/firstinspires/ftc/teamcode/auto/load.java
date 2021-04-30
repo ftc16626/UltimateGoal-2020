@@ -73,7 +73,7 @@ public class Load extends OpMode {
 
     @Override
     public void start() {
-
+        robot.wobbleClaw.setPosition(Robot.CLAW_OPENED);
     }
 
 
@@ -87,6 +87,7 @@ public class Load extends OpMode {
             robot.intakeMotor.setPower(0);
             robot.intakeServo.setPower(0);
         }
+
     }
 
     /*
